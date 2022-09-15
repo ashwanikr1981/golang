@@ -55,6 +55,7 @@ START:
 
 func afterLoginOptions() {
 
+	fmt.Println("Welcome ", TempAccount[0].Name, "!!!")
 	fmt.Println("Please select an option from the menu below:")
 	fmt.Println("1 -> Withdraw Money")
 	fmt.Println("2 -> Deposit Money")
