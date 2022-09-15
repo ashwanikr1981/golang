@@ -8,15 +8,15 @@ import (
 type User struct {
 	Name     string
 	Id       int
-	Password int
+	Password string
 }
 
 var UserId int = 11
-var UserPassword int = 11
+var UserPassword string = "1234"
 
 func login() {
 	var userid int
-	var password int
+	var password string
 	fmt.Print("Please enter your user id: ")
 	fmt.Scan(&userid)
 	fmt.Print("Please enter your password: ")
@@ -65,8 +65,8 @@ func afterLoginOptions() {
 }
 
 func createAccount() {
-	var userid, password int
-	var name string
+	var userid int
+	var name, password string
 	fmt.Print("Please enter name: ")
 	fmt.Scan(&name)
 	fmt.Print("Please enter user id: ")
