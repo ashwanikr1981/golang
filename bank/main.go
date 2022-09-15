@@ -34,7 +34,6 @@ START:
 			TempAccount = append(TempAccount, temp)
 			afterLoginOptions()
 		} else {
-			fmt.Println("out")
 			isFound = false
 		}
 	}
@@ -55,6 +54,7 @@ START:
 }
 
 func afterLoginOptions() {
+
 	fmt.Println("Please select an option from the menu below:")
 	fmt.Println("1 -> Withdraw Money")
 	fmt.Println("2 -> Deposit Money")
@@ -106,6 +106,7 @@ START:
 	} else {
 		TempAccount[0].Balance = TempAccount[0].Balance - amount
 		fmt.Println("Thanks for withdrawing amount: ", amount)
+		updateRecord()
 		afterLoginOptions()
 	}
 }
@@ -116,12 +117,25 @@ func depositMoney() {
 	fmt.Scan(&amount)
 	TempAccount[0].Balance = TempAccount[0].Balance + amount
 	fmt.Println("Thanks for depositing amount: ", amount)
+	updateRecord()
 	afterLoginOptions()
 }
 
 func balanceEnquiry() {
 	fmt.Println("Your balance are: ", TempAccount[0].Balance)
 	afterLoginOptions()
+}
+
+func updateRecord() {
+
+	for i, val := range Account {
+		if TempAccount[0].Id == val.Id && TempAccount[0].Password == val.Password {
+			// userData := User{Name: val.Name, Id: val.Id, Password: val.Password, Balance: TempAccount[0].Balance}
+			// Account[key] = {}
+			Account[i].Balance = TempAccount[0].Balance
+			break
+		}
+	}
 }
 
 func createAccount() {
