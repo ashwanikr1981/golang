@@ -131,8 +131,6 @@ func updateRecord() {
 
 	for i, val := range Account {
 		if TempAccount[0].Id == val.Id && TempAccount[0].Password == val.Password {
-			// userData := User{Name: val.Name, Id: val.Id, Password: val.Password, Balance: TempAccount[0].Balance}
-			// Account[key] = {}
 			Account[i].Balance = TempAccount[0].Balance
 			break
 		}
