@@ -43,12 +43,10 @@ func afterLoginOptions() {
 
 	switch opt {
 	case 1:
-		fmt.Println("withdraw money")
-		fmt.Println("Bye!!")
+		withDrawMoney()
 		os.Exit(1)
 	case 2:
-		fmt.Println("deposit money")
-		fmt.Println("Bye!!")
+		depositMoney()
 		os.Exit(1)
 	case 3:
 		fmt.Println("balance")
@@ -64,6 +62,22 @@ func afterLoginOptions() {
 
 }
 
+func withDrawMoney() {
+	fmt.Print("Enter amount to be withdrawn: ")
+	var amount int64
+	fmt.Scan(&amount)
+	fmt.Println("Thanks for withdrawing amount: ", amount)
+	afterLoginOptions()
+}
+
+func depositMoney() {
+	fmt.Print("Enter amount to be deposited: ")
+	var amount int64
+	fmt.Scan(&amount)
+	fmt.Println("Thanks for depositing amount: ", amount)
+	afterLoginOptions()
+}
+
 func createAccount() {
 	var userid int
 	var name, password string
@@ -74,10 +88,7 @@ func createAccount() {
 	fmt.Print("Please enter password: ")
 	fmt.Scan(&password)
 
-	userData := User{}
-	userData.Name = name
-	userData.Password = password
-	userData.Id = userid
+	userData := User{name, userid, password}
 
 	fmt.Println("User has been created successfully", userData)
 	main()
