@@ -9,25 +9,45 @@ type User struct {
 	Name     string
 	Id       int
 	Password string
+	Balance  int64
 }
 
-var UserId int = 11
-var UserPassword string = "1234"
+var Account []User
 
 func login() {
+
 	var userid int
 	var password string
+START:
 	fmt.Print("Please enter your user id: ")
 	fmt.Scan(&userid)
 	fmt.Print("Please enter your password: ")
 	fmt.Scan(&password)
 
-	if userid == UserId && password == UserPassword {
-		afterLoginOptions()
-	} else {
-		fmt.Println("Invalid Credentials. Please try again")
-		main()
+	var isFound bool = false
+
+	for _, val := range Account {
+		if userid == val.Id && password == val.Password {
+			afterLoginOptions()
+		} else {
+			fmt.Println("out")
+			isFound = false
+		}
 	}
+
+	if !isFound {
+		fmt.Println("Invalid Credentials. Type c for try again and q for quit")
+		var opt string
+		fmt.Print("Enter: ")
+		fmt.Scan(&opt)
+		if opt == "c" {
+			goto START
+		} else {
+			fmt.Println("Bye!!!")
+			exitProgram()
+		}
+	}
+
 }
 
 func afterLoginOptions() {
@@ -44,22 +64,24 @@ func afterLoginOptions() {
 	switch opt {
 	case 1:
 		withDrawMoney()
-		os.Exit(1)
 	case 2:
 		depositMoney()
-		os.Exit(1)
 	case 3:
 		fmt.Println("balance")
 		fmt.Println("Bye!!")
-		os.Exit(1)
+		exitProgram()
 	case 4:
 		fmt.Println("Bye!!")
-		os.Exit(1)
+		exitProgram()
 	default:
 		fmt.Println("Invalid please try again")
 		afterLoginOptions()
 	}
 
+}
+
+func exitProgram() {
+	os.Exit(1)
 }
 
 func withDrawMoney() {
@@ -81,6 +103,7 @@ func depositMoney() {
 func createAccount() {
 	var userid int
 	var name, password string
+	fmt.Println("Create Account")
 	fmt.Print("Please enter name: ")
 	fmt.Scan(&name)
 	fmt.Print("Please enter user id: ")
@@ -88,9 +111,11 @@ func createAccount() {
 	fmt.Print("Please enter password: ")
 	fmt.Scan(&password)
 
-	userData := User{name, userid, password}
+	userData := User{Name: name, Id: userid, Password: password}
 
-	fmt.Println("User has been created successfully", userData)
+	Account = append(Account, userData)
+
+	fmt.Println("User has been created successfully", Account)
 	main()
 }
 
@@ -98,7 +123,7 @@ func main() {
 	fmt.Println("Hi! Welcome to Mr. Ashwani ATM Machine!")
 	fmt.Println("Please select an option from the menu below:")
 	fmt.Println("l -> Login\nc -> Create New Account\nq -> Quit")
-
+	fmt.Print("Enter: ")
 	var opt string
 
 	_, err := fmt.Scanln(&opt)
@@ -112,6 +137,7 @@ func main() {
 		createAccount()
 	} else if opt == "q" {
 		fmt.Println("Thank you for using our service. Bye!")
+		exitProgram()
 	} else {
 		fmt.Println("Wrong selection. Please try again!")
 		main()
