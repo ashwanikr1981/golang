@@ -14,6 +14,8 @@ type User struct {
 
 var Account []User
 
+var TempAccount []User
+
 func login() {
 
 	var userid int
@@ -28,6 +30,8 @@ START:
 
 	for _, val := range Account {
 		if userid == val.Id && password == val.Password {
+			temp := User{Name: val.Name, Id: val.Id, Password: val.Password, Balance: val.Balance}
+			TempAccount = append(TempAccount, temp)
 			afterLoginOptions()
 		} else {
 			fmt.Println("out")
@@ -56,6 +60,7 @@ func afterLoginOptions() {
 	fmt.Println("2 -> Deposit Money")
 	fmt.Println("3 -> Request Balance")
 	fmt.Println("4 -> Quit the Program")
+	fmt.Print("Enter: ")
 
 	var opt int
 
@@ -67,8 +72,7 @@ func afterLoginOptions() {
 	case 2:
 		depositMoney()
 	case 3:
-		fmt.Println("balance")
-		fmt.Println("Bye!!")
+		balanceEnquiry()
 		exitProgram()
 	case 4:
 		fmt.Println("Bye!!")
@@ -85,18 +89,38 @@ func exitProgram() {
 }
 
 func withDrawMoney() {
+	fmt.Println(TempAccount)
+START:
 	fmt.Print("Enter amount to be withdrawn: ")
 	var amount int64
 	fmt.Scan(&amount)
-	fmt.Println("Thanks for withdrawing amount: ", amount)
-	afterLoginOptions()
+	if amount > TempAccount[0].Balance {
+		fmt.Println("Please enter the sufficent amount. For continue type 'c' and type 'b' for go back")
+		var opt string
+		fmt.Scan(&opt)
+		if opt == "c" {
+			goto START
+		} else {
+			afterLoginOptions()
+		}
+	} else {
+		TempAccount[0].Balance = TempAccount[0].Balance - amount
+		fmt.Println("Thanks for withdrawing amount: ", amount)
+		afterLoginOptions()
+	}
 }
 
 func depositMoney() {
 	fmt.Print("Enter amount to be deposited: ")
 	var amount int64
 	fmt.Scan(&amount)
+	TempAccount[0].Balance = TempAccount[0].Balance + amount
 	fmt.Println("Thanks for depositing amount: ", amount)
+	afterLoginOptions()
+}
+
+func balanceEnquiry() {
+	fmt.Println("Your balance are: ", TempAccount[0].Balance)
 	afterLoginOptions()
 }
 
@@ -111,7 +135,7 @@ func createAccount() {
 	fmt.Print("Please enter password: ")
 	fmt.Scan(&password)
 
-	userData := User{Name: name, Id: userid, Password: password}
+	userData := User{Name: name, Id: userid, Password: password, Balance: 0}
 
 	Account = append(Account, userData)
 
