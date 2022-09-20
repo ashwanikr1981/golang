@@ -10,16 +10,13 @@ import (
 
 func add(x int, y int) int {
 	fmt.Println(x, y)
-
 	for i := 1; i <= y; i++ {
 		x++
 	}
-
 	return x
 }
 
 func main() {
-
 	a := 5
 	b := 10
 	c := add(a, b)
