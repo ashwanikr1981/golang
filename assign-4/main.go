@@ -22,10 +22,8 @@ func printNumber(num chan int) {
 
 func printAlphabets(alpha chan string) {
 
-	arr := []string{"A", "B", "C", "D", "E", "F"}
-
-	for _, v := range arr {
-		alpha <- v
+	for i := 'A'; i <= 'F'; i++ {
+		alpha <- string(i)
 	}
 	close(alpha)
 
