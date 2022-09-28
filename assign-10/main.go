@@ -44,13 +44,7 @@ func HandleClients(w http.ResponseWriter, r *http.Request) {
 	ClientDetail.Time = time.Now().Format("2006-01-02 15:04:05")
 	connectedClients = append(connectedClients, ClientDetail)
 
-	for _, client := range connectedClients {
-		// Showing only the latest connected device.
-		if websocket.RemoteAddr() == client.websocket.RemoteAddr() {
-			fmt.Println("New Connection (", client.Time, "): ", client.websocket.RemoteAddr(), " ", client.websocket.LocalAddr(), "  ", websocket.RemoteAddr(), " ")
-		}
-	}
-
+fmt.Println("New Connection (", ClientDetail.Time, "): ", ClientDetail.websocket.RemoteAddr(), " ", ClientDetail.websocket.LocalAddr(), "  ", websocket.RemoteAddr(), " ")
 	for {
 		var message Message
 
